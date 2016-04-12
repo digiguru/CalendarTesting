@@ -1,7 +1,7 @@
 class DateRange {
     startDate: Date;
     endDate: Date;
-    constructor(startDate, endDate) {
+    constructor(startDate:Date, endDate:Date) {
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -9,22 +9,19 @@ class DateRange {
         var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
         return Math.round(Math.abs((this.startDate.getTime() - this.endDate.getTime())/(oneDay)));
     }
-    toString() {
-        return "okay?... FROM " + this.startDate.toLocaleDateString() + " TO " + this.endDate.toLocaleDateString();
-    } 
 }
 class DateHelper {
     static days:string[] = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    static isWeekend(date) : Boolean {
+    static isWeekend(date:Date) : Boolean {
         var dayIndex = date.getDay();
         return dayIndex === 0 || dayIndex === 6;
     }
-    static addDays(date, days) : Date {
-        var result = new Date(date);
+    static addDays(date:Date, days:number) : Date {
+        var result = new Date(date.getTime());
         result.setDate(result.getDate() + days);
         return result;
     }
-    static dayOfWeek(dayIndex:number): string {
+    static dayOfWeek(dayIndex:number) : string {
         return DateHelper.days[dayIndex];
     }
     static daysFromStart(startOfWeek:string) : string[] {
@@ -36,11 +33,9 @@ class DateHelper {
     }
 }
 class DateLayout {
-    dayOfWeekOrder: String[] = new Array(7);
+    days:string[];
     constructor(startDay:string) {
-        if(startDay === "Monday") {
-           
-        }
+       this.days = DateHelper.daysFromStart(startDay);
     }
 }
 class RangeToDates {
@@ -66,9 +61,6 @@ class WorkableDate {
     dayOfWeek(): String {
         return DateHelper.dayOfWeek(this.date.getDay());
     }
-    toString() {
-        return "Working on this date: " + this.date.toLocaleDateString() + "? " + this.isWorkDay;
-    } 
 }
 
 class RangeCreator {

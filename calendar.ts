@@ -1,3 +1,17 @@
+class TemplateLoader {
+    static loadTemplate (template) {
+        return $.get(template);
+    }
+    static renderTemplate (url, data) {
+        var promise = $.Deferred();
+        TemplateLoader.loadTemplate(url).then(function(template, textStatus, jqXhr) {
+            var rendered = Mustache.render(template, data)
+            promise.resolve(rendered);
+        });
+        return promise;
+    }
+}
+
 class DateRange {
     startDate: Date;
     endDate: Date;
@@ -91,3 +105,8 @@ console.log(DateHelper.daysFromStart("Tuesday"));
 console.log(DateHelper.daysFromStart("Monday"));
 
 
+TemplateLoader.renderTemplate("calendar-head.mustache", 
+    {"days":["monday", "tuesday","wed"]}
+).then(function(x) { 
+    console.log("hello", x) 
+} );

@@ -1,3 +1,19 @@
+var TemplateLoader = (function () {
+    function TemplateLoader() {
+    }
+    TemplateLoader.loadTemplate = function (template) {
+        return $.get(template);
+    };
+    TemplateLoader.renderTemplate = function (url, data) {
+        var promise = $.Deferred();
+        TemplateLoader.loadTemplate(url).then(function (template, textStatus, jqXhr) {
+            var rendered = Mustache.render(template, data);
+            promise.resolve(rendered);
+        });
+        return promise;
+    };
+    return TemplateLoader;
+}());
 var DateRange = (function () {
     function DateRange(startDate, endDate) {
         this.startDate = startDate;
@@ -6,9 +22,6 @@ var DateRange = (function () {
     DateRange.prototype.days = function () {
         var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
         return Math.round(Math.abs((this.startDate.getTime() - this.endDate.getTime()) / (oneDay)));
-    };
-    DateRange.prototype.toString = function () {
-        return "okay?... FROM " + this.startDate.toLocaleDateString() + " TO " + this.endDate.toLocaleDateString();
     };
     return DateRange;
 }());
@@ -20,7 +33,7 @@ var DateHelper = (function () {
         return dayIndex === 0 || dayIndex === 6;
     };
     DateHelper.addDays = function (date, days) {
-        var result = new Date(date);
+        var result = new Date(date.getTime());
         result.setDate(result.getDate() + days);
         return result;
     };
@@ -39,9 +52,7 @@ var DateHelper = (function () {
 }());
 var DateLayout = (function () {
     function DateLayout(startDay) {
-        this.dayOfWeekOrder = new Array(7);
-        if (startDay === "Monday") {
-        }
+        this.days = DateHelper.daysFromStart(startDay);
     }
     return DateLayout;
 }());
@@ -63,9 +74,6 @@ var WorkableDate = (function () {
     }
     WorkableDate.prototype.dayOfWeek = function () {
         return DateHelper.dayOfWeek(this.date.getDay());
-    };
-    WorkableDate.prototype.toString = function () {
-        return "Working on this date: " + this.date.toLocaleDateString() + "? " + this.isWorkDay;
     };
     return WorkableDate;
 }());
@@ -96,3 +104,5 @@ console.log(rc.createMonth("Jan", 2016));
 console.log(rc.createMonth("Dec", 2016));
 var rtd = new RangeToDates(rc.createMonth("Jan", 2016));
 console.log(rtd);
+console.log(DateHelper.daysFromStart("Tuesday"));
+console.log(DateHelper.daysFromStart("Monday"));

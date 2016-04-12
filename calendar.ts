@@ -95,3 +95,7 @@ console.log(rc.createMonth("Jan", 2016));
 console.log(rc.createMonth("Dec", 2016));
 var rtd = new RangeToDates(rc.createMonth("Jan", 2016));
 console.log(rtd);
+console.log(DateHelper.daysFromStart("Tuesday"));
+console.log(DateHelper.daysFromStart("Monday"));
+
+

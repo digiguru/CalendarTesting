@@ -1,0 +1,52 @@
+.week, .weekdays {
+  display: flex;
+}
+
+.day, .dayname {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+}
+
+.week:first-of-type .day:first-of-type {
+  margin-left: 42.85714%;
+}
+
+.week:last-of-type .day:last-of-type {
+  margin-right: 14.285%;
+}
+
+/* OTHER STYLES */
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(135deg, #fad961, #f76d1d);
+  background-attachment: fixed;
+}
+
+.title {
+  max-width: 560px;
+  margin: 20px auto;
+  font-size: small;
+  text-align:center;
+}
+.month {
+  max-width: 560px;
+  margin: 20px auto;
+}
+
+.week {
+  height: 80px;
+}
+
+.day {
+  color: #F98909;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 
+    -1px -1px #F9A440, 
+    inset -1px -1px 0 0 #F9A440;
+}

@@ -106,3 +106,6 @@ var rtd = new RangeToDates(rc.createMonth("Jan", 2016));
 console.log(rtd);
 console.log(DateHelper.daysFromStart("Tuesday"));
 console.log(DateHelper.daysFromStart("Monday"));
+TemplateLoader.renderTemplate("calendar-head.mustache", { "days": ["monday", "tuesday", "wed"] }).then(function (x) {
+    console.log("hello", x);
+});
